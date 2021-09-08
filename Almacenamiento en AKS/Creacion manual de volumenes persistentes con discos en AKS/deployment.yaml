@@ -1,0 +1,26 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: debian-box
+spec:
+  containers:
+    - name: debian
+      image: debian
+      command: [ "sleep" ]
+      args: [ "infinity" ]
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 250m
+          memory: 256Mi
+      volumeMounts:
+        - mountPath: "/mnt/azure"
+          name: azure
+  volumes:
+    - name: azure
+      azureDisk:
+        kind: Managed
+        diskName: myAKSDisk
+        diskURI: /subscriptions/15f35901-7f58-4468-959c-8de8c1e040ab/resourceGroups/MC_myAKSCluster_myAKSCluster_eastus/providers/Microsoft.Compute/disks/myAKSDisk
